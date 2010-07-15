@@ -1,0 +1,5 @@
+#summary Overview of the algorithms and data structures employed by the IR Toolkit at a high level.
+
+= Introduction =
+
+The purpose of the IR Toolkit is to be able to index large volumes of data and to allow issuing of queries across that data. It uses the inverted index data structure to achieve this and is designed to be a flexible and configurable system to facilitate web research.
