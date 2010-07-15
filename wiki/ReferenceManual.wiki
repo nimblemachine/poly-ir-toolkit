@@ -1,0 +1,25 @@
+#summary How to compile and use the IR Toolkit.
+
+= Introduction =
+
+This document will explain the system requirements necessary for the IR Toolkit, as well as how to compile it, and it's various usage modes.
+
+
+= System Requirements =
+
+The IR Toolkit has been developed with and tested on recent Linux distributions; however, it should run on POSIX compliant operating systems (but perhaps with some tweaks).
+
+= Compiling =
+
+The IR Toolkit uses standard C++ as much as possible. It's been compiled with GCC 4.3 (recent version should work OK). It's possible there is some GCC specific code (but very little). It comes with a Makefile, so as long as the following libraries are installed in their default locations, it should compile without changes.
+
+=== Dependent Libraries ===
+ * zlib
+ * POSIX Threads
+ * POSIX Asynchronous I/O (AIO)
+
+The Threads and AIO libraries should come with any POSIX compliant OS.
+
+= Code Style =
+
+If you want to hack the IR Toolkit, you'll find that the code style closely follows that of the [http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml Google C++ Style Guide].
