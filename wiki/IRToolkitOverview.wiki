@@ -1,4 +1,5 @@
 #summary Overview of the algorithms and data structures employed by the IR Toolkit at a high level.
+#labels Featured
 
 = Introduction =
 
