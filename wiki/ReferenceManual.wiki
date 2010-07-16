@@ -13,7 +13,7 @@ The IR Toolkit has been developed with and tested on recent Linux distributions;
 
 The IR Toolkit uses standard C++ as much as possible. It's been compiled with GCC 4.3 (recent version should work OK). It's possible there is some GCC specific code (but very little). It comes with a Makefile, so as long as the following libraries are installed in their default locations, it should compile without changes.
 
-=== Dependent Libraries ===
+*Dependent Libraries:*
  * zlib
  * POSIX Threads
  * POSIX Asynchronous I/O (AIO)
@@ -24,13 +24,23 @@ The Threads and AIO libraries should come with any POSIX compliant OS.
 
 If you want to hack the IR Toolkit, you'll find that the code style closely follows that of the [http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml Google C++ Style Guide].
 
-= Indexing =
+= Configuration =
 
+The IR Toolkit comes with a sample configuration file, which is called 'irtk.conf'. There are many powerful options, which are all described in the configuration file. Some of the things that can be done through the configuration file:
+ * Tune memory usage.
+ * Change index coding policies for docIDs, frequencies, positions, and block headers.
+ * Set whether positions and contexts are to be indexed.
+ * There are separate coding policies and options for data to be included in the index for both the initial indexing step and the merging step; thus, an index could be generated with one set of codings and positions, and then re-merged to be without positions and a different set of coding policies.
+
+= Command Line Options =
+
+= Index Slices =
+
+
+= Indexing =
 
 
 = Merging =
 
 
-
 = Querying =
-
