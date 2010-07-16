@@ -1,5 +1,5 @@
 #summary How to compile and use the IR Toolkit.
-#labels Featured,Phase-Deploy
+#labels Featured
 
 = Introduction =
 This document will explain the system requirements necessary for the IR Toolkit, as well as how to compile it, and it's various usage modes.
@@ -32,25 +32,31 @@ The IR Toolkit comes with a sample configuration file, which is called 'irtk.con
 The IR Toolkit tries to play nice with other UNIX tools; many of the options take input from standard input, so that they could be used with pipes and I/O redirection.
 
 *To index:* `irtk --index`
+
 irtk will then read from stdin the filenames (including the path, if not in the current directory) of the index bundles (say, from the gov2 dataset) that it will index. Each different file is separated by a newline.
 
 *To merge:* `irtk --merge=[value]`
-If the value is 'initial', all the index slices from the indexing step (with extension 0.y) will be merged into one index, consisting of the files index.idx, index.lex, index.dmap, and index.meta.
+
+If the value is 'initial', all the index slices from the indexing step (with extension 0.y) will be merged into one index, consisting of the files index.idx, index.lex, index.dmap, and index.meta; depending on the configuration file, intermediate slices may also be left (otherwise, they will be deleted).
 If the value is 'input', the merger will read from stdin those files you want to merge followed by the new index slice name.
 
-_additional options:_
---merge-degree=[value]: specify the merge degree to use (default: 64)
+_additional options:_ `--merge-degree=[value]`
+Specify the merge degree to use (default is 64)
 
+*To query:* `irtk --query [IndexFilename] [LexiconFilename] [DocumentMapFilename] [MetaFilename]`
 
-To query: irtk --query [IndexFilename] [LexiconFilename] [DocumentMapFilename] [MetaFilename]
-  options:
-    --query-mode=[value]: sets the querying mode.
-                          value is 'interactive', 'interactive-single', or 'batch'
-To cat: irtk --cat [IndexFilename] [LexiconFilename] [DocumentMapFilename] [MetaFilename]
-To diff: irtk --diff [IndexFilename1] [LexiconFilename1] [DocumentMapFilename1] [MetaFilename1] [IndexFilename2] [LexiconFilename2] [DocumentMapFilename2] [MetaFilename2]
-To run compression tests: irtk --test-compression
-To test a particular coder: irtk --test-coder [rice, turbo-rice, pfor, s9, s16, vbyte, null]
+Queries the index slice. If the filenames are left out, the default is to use index slice with the files index.idx, index.lex, index.dmap, index.meta.
 
+_additional options:_ `--query-mode=[value]`
+Set the querying mode. Value is one of 'interactive', 'interactive-single', or 'batch'.
+
+*To cat:* `irtk --cat [IndexFilename] [LexiconFilename] [DocumentMapFilename] [MetaFilename]`
+
+*To diff:* `irtk --diff [IndexFilename1] [LexiconFilename1] [DocumentMapFilename1] [MetaFilename1] [IndexFilename2] [LexiconFilename2] [DocumentMapFilename2] [MetaFilename2]`
+
+*To run compression tests:* `irtk --test-compression`
+
+*To test a particular coder:* `irtk --test-coder [rice, turbo-rice, pfor, s9, s16, vbyte, null]`
 
 = Index Slices =
 
