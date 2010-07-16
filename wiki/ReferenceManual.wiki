@@ -39,12 +39,12 @@ The IR Toolkit comes with a sample configuration file, which is called 'irtk.con
 = Index Slices =
 
 An index slice is a complete and queryable index, consisting of the following files:
- * index.idx[.x.y]
- * index.lex[.x.y]
- * index.dmap[.x.y]
- * index.meta[.x.y]
+ * index.idx`[`.x.y`]`
+ * index.lex`[`.x.y`]`
+ * index.dmap`[`.x.y`]`
+ * index.meta`[`.x.y`]`
 
-The part in between [...] is optional. A fully merged index will not have the .x.y extension.
+The part in between `[`...`]` is optional. A fully merged index will not have the .x.y extension.
 The x and y are simply numbers which are assigned by the index merger to distinguish indices. The initial indices, resulting from the indexing step have x equal to 0, and y is just an incrementing index count. Each pass that the merger makes over the index collection will result in an incrementing x, and y is still just an index count within that pass.
 
 = Indexing =
