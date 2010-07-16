@@ -2,16 +2,13 @@
 #labels Featured,Phase-Deploy
 
 = Introduction =
-
 This document will explain the system requirements necessary for the IR Toolkit, as well as how to compile it, and it's various usage modes.
 
 
 = System Requirements =
-
 The IR Toolkit has been developed with and tested on recent Linux distributions; however, it should run on POSIX compliant operating systems (but perhaps with some tweaks).
 
 = Compiling =
-
 The IR Toolkit uses standard C++ as much as possible. It's been compiled with GCC 4.3 (recent version should work OK). It's possible there is some GCC specific code (but very little). It comes with a Makefile, so as long as the following libraries are installed in their default locations, it should compile without changes.
 
 *Dependent Libraries:*
@@ -22,11 +19,9 @@ The IR Toolkit uses standard C++ as much as possible. It's been compiled with GC
 The Threads and AIO libraries should come with any POSIX compliant OS.
 
 = Code Style =
-
 If you want to hack the IR Toolkit, you'll find that the code style closely follows that of the [http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml Google C++ Style Guide].
 
 = Configuration =
-
 The IR Toolkit comes with a sample configuration file, which is called 'irtk.conf'. There are many powerful options, which are all described in the configuration file. Some of the things that can be done through the configuration file:
  * Tune memory usage.
  * Change index coding policies for docIDs, frequencies, positions, and block headers.
@@ -34,6 +29,27 @@ The IR Toolkit comes with a sample configuration file, which is called 'irtk.con
  * There are separate coding policies and options for data to be included in the index for both the initial indexing step and the merging step; thus, an index could be generated with one set of codings and positions, and then re-merged to be without positions and a different set of coding policies.
 
 = Command Line Options =
+The IR Toolkit tries to play nice with other UNIX tools; many of the options take input from standard input, so that they could be used with pipes and I/O redirection.
+
+*To index:* `irtk --index`
+irtk will then read from stdin the filenames (including the path, if not in the current directory) of the index bundles (say, from the gov2 dataset) that it will index. Each different file is separated by a newline.
+
+*To merge:* `irtk --merge=[value]`
+If the value is 'initial', all the index slices from the indexing step (with extension 0.y) will be merged into one index, consisting of the files index.idx, index.lex, index.dmap, and index.meta.
+If the value is 'input', the merger will read from stdin those files you want to merge followed by the new index slice name.
+
+_additional options:_
+--merge-degree=[value]: specify the merge degree to use (default: 64)
+
+
+To query: irtk --query [IndexFilename] [LexiconFilename] [DocumentMapFilename] [MetaFilename]
+  options:
+    --query-mode=[value]: sets the querying mode.
+                          value is 'interactive', 'interactive-single', or 'batch'
+To cat: irtk --cat [IndexFilename] [LexiconFilename] [DocumentMapFilename] [MetaFilename]
+To diff: irtk --diff [IndexFilename1] [LexiconFilename1] [DocumentMapFilename1] [MetaFilename1] [IndexFilename2] [LexiconFilename2] [DocumentMapFilename2] [MetaFilename2]
+To run compression tests: irtk --test-compression
+To test a particular coder: irtk --test-coder [rice, turbo-rice, pfor, s9, s16, vbyte, null]
 
 
 = Index Slices =
@@ -44,13 +60,20 @@ An index slice is a complete and queryable index, consisting of the following fi
  * index.dmap`[`.x.y`]`
  * index.meta`[`.x.y`]`
 
-The part in between `[`...`]` is optional. A fully merged index will not have the .x.y extension.
-The x and y are simply numbers which are assigned by the index merger to distinguish indices. The initial indices, resulting from the indexing step have x equal to 0, and y is just an incrementing index count. Each pass that the merger makes over the index collection will result in an incrementing x, and y is still just an index count within that pass.
+The part in between `[`...`]` is optional. A fully merged index will not have the .x.y extension. The x and y are simply numbers which are assigned by the index merger to distinguish indices. The initial indices, resulting from the indexing step have x equal to 0, and y is just an incrementing index count. Each pass that the merger makes over the index collection will result in an incrementing x, and y is still just an index count within that pass.
+
+The .idx extension indicates that the file is an inverted index.
+The .lex extension indicates that the file is a lexicon.
+The .dmap extension indicates that the file is a document map.
+The .meta extension indicates that the file is a meta file.
+
+Index slices can be merged into larger index slices, as is described in the Merging section.
 
 = Indexing =
-
+...
 
 = Merging =
-
+...
 
 = Querying =
+...
