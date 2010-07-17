@@ -2,5 +2,16 @@
 #labels Featured
 
 = Introduction =
-
 The purpose of the IR Toolkit is to be able to index large volumes of data and to allow issuing of queries across that data. It uses the inverted index data structure to achieve this and is designed to be a flexible and configurable system to facilitate web research.
+
+= Indexing =
+
+
+
+== Index Layout ==
+
+
+= Merging =
+
+
+= Querying =
