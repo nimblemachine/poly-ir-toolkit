@@ -2,8 +2,9 @@
 
 = General Notes =
   * There are some duplicate docIDs in GOV2, and their scores will be the same; manually verified for a few docs.
-  * 
-  * 
+
+= Experiments to Run =
+  * Benchmark indexing speed and query speed against zettair. Can also index with varbyte to make comparison fair.
 
 = Files That Need Serious Cleanup =
   * document_map.h/cc
