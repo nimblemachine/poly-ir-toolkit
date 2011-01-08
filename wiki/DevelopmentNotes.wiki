@@ -1,0 +1,13 @@
+#summary Development notes.
+
+= General Notes =
+  * There are some duplicate docIDs in GOV2, and their scores will be the same; manually verified for a few docs.
+  * 
+  * 
+
+= Files That Need Serious Cleanup =
+  * document_map.h/cc
+  * query_processor.h/cc
+
+= Commands to Keep in Mind =
+  * valgrind --tool=cachegrind --branch-sim=yes --cachegrind-out-file=cachegrind.out ./irtk --loop-over-index-data=gov  index.idx index.lex index.dmap index.meta
