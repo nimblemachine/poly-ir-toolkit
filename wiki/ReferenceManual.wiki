@@ -63,7 +63,7 @@ Queries the index slice. If the filenames are left out, the default is to use in
 _additional options:_ `--query-mode=[value]`
 Set the querying mode. Value is one of 'interactive', 'interactive-single', or 'batch'.
 
-== Debug ==
+== Debug and Performance ==
 *To cat:* `irtk --cat [IndexFilename] [LexiconFilename] [DocumentMapFilename] [MetaFilename]`
 
 *To diff:* `irtk --diff [IndexFilename1] [LexiconFilename1] [DocumentMapFilename1] [MetaFilename1] [IndexFilename2] [LexiconFilename2] [DocumentMapFilename2] [MetaFilename2]`
