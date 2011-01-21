@@ -4,11 +4,24 @@
 = Introduction =
 The purpose of the IR Toolkit is to be able to index large volumes of data and to allow issuing of queries across that data. It uses the inverted index data structure to achieve this and is designed to be a flexible and configurable system to facilitate web research.
 
+= Parser =
+
+The parser ignores HTML tags and JavaScript and tokenizes on any word separated by a non-alphanumeric character(s). It keeps track inside of which HTML tag words are currently being tokenized, thus, some context information can be extracted for each token; i.e. whether a token appears inside the "h" tag.
+
+The parser supports parsing document bundles in either the TREC or WARC format, which are commonly used for research datasets (Gov2 and ClueWeb).
+
 = Indexing =
 
-
+The indexer is designed to use variable amounts of memory. The more memory that is allocated, the faster the indexing process will complete. 
 
 == Index Layout ==
+
+=== Positions ===
+Due to the index layout, specifically, the fixed block size, the maximum number of positions per term in a document, must be limited (it's a compile time constant).
+
+
+=== Coding Policies (Compression) ===
+PolyIRTK supports various coding policies for different parts of the index. This allows us to take advantage of the differences between docIDs, frequencies, and positions, to choose the best compression algorithm, as well as experiment with new algorithms.
 
 
 = Merging =
