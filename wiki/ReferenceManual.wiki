@@ -32,22 +32,27 @@ PolyIRTK tries to play nice with other UNIX tools; many of the options allow inp
 
 == Indexing ==
 Example usage:
-`./irtk --index < input`
+
+*`./irtk --index < input`*
+
 The indexer reads the paths to the files it should index from standard in; the above command redirects the standard input to come from a file called input.
 The input file is a plain text file that should contain the absolute paths (or relative to the current directory) to the files you need to index, one per line.
 PolyIRTK can index either TREC (i.e. Gov2 dataset) or WARC (i.e. ClueWeb dataset) formatted files; however, they must be gzipped. The type of input file is specified in the configuration file.
 
 == Merging ==
 Example usage:
-`./irtk --merge=initial`
 
+*`./irtk --merge=initial`*
 
-*To merge:* `irtk --merge=[value]`
+This command will merge all the index slices from the initial indexing step (with extension 0.y) into one index, consisting of the files index.idx, index.lex, index.dmap, and index.meta. Depending on the configuration file, intermediate slices may also be left (otherwise, they will be deleted).
 
-If the value is 'initial', all the index slices from the indexing step (with extension 0.y) will be merged into one index, consisting of the files index.idx, index.lex, index.dmap, and index.meta; depending on the configuration file, intermediate slices may also be left (otherwise, they will be deleted).
-If the value is 'input', the merger will read from stdin those files you want to merge followed by the new index slice name.
+*`./irtk --merge=input`*
 
-_additional options:_ `--merge-degree=[value]`
+In this command, the merger will read from stdin those files you want to merge followed by the new index slice name.
+
+=== Additional Options ===
+*`--merge-degree=[value]`*
+
 Specify the merge degree to use (default is 64)
 
 == Querying ==
