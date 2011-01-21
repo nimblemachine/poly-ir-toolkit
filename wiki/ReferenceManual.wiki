@@ -1,15 +1,14 @@
-#summary How to compile and use the IR Toolkit.
+#summary How to compile and use the Poly IR Toolkit.
 #labels Featured
 
 = Introduction =
-This document will explain the system requirements necessary for the IR Toolkit, as well as how to compile it, and it's various usage modes.
-
+This document will explain the system requirements necessary for the Poly IR Toolkit (referred to as PolyIRTK from here on), as well as how to compile it, and it's various usage modes.
 
 = System Requirements =
-The IR Toolkit has been developed with and tested on recent Linux distributions; however, it should run on POSIX compliant operating systems (but perhaps with some tweaks).
+PolyIRTK has been developed with and tested on recent Linux distributions; however, it should run on POSIX compliant operating systems (but perhaps with some tweaks).
 
 = Compiling =
-The IR Toolkit uses standard C++ as much as possible. It's been compiled with GCC 4.3 (recent version should work OK). It's possible there is some GCC specific code (but very little). It comes with a Makefile, so as long as the following libraries are installed in their default locations, it should compile without changes.
+PolyIRTK uses standard C++ as much as possible. It's been compiled with GCC 4.x (recent versions should work OK). It's possible there is some GCC specific code (but not much). It comes with a Makefile, so as long as the following libraries are installed in their default locations, it should compile without changes.
 
 *Dependent Libraries:*
  * zlib
@@ -19,22 +18,31 @@ The IR Toolkit uses standard C++ as much as possible. It's been compiled with GC
 The Threads and AIO libraries should come with any POSIX compliant OS.
 
 = Code Style =
-If you want to hack the IR Toolkit, you'll find that the code style closely follows that of the [http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml Google C++ Style Guide].
+If you would like to hack PolyIRTK, you'll find that the code style closely follows that of the [http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml Google C++ Style Guide]. The main deviation is in the maximum horizontal line size; instead of 80 characters, PolyIRTK uses 160 characters, which I feel takes better advantage of high resolution widescreen monitors.
 
 = Configuration =
-The IR Toolkit comes with a sample configuration file, which is called 'irtk.conf'. There are many powerful options, which are all described in the configuration file. Some of the things that can be done through the configuration file:
- * Tune memory usage.
- * Change index coding policies for docIDs, frequencies, positions, and block headers.
- * Set whether positions and contexts are to be indexed.
- * There are separate coding policies and options for data to be included in the index for both the initial indexing step and the merging step; thus, an index could be generated with one set of codings and positions, and then re-merged to be without positions and a different set of coding policies.
+PolyIRTK comes with a sample configuration file, 'irtk.conf'. There are many powerful options, which are described in the sample configuration file. Some of the things that can be done through the configuration file:
+ * Tune memory usage for the various modes.
+ * Define the index coding policies for docIDs, frequencies, positions, and block headers. There are separate coding policies for the indexing and merging steps, allowing you to generate an index with one set of coding policies, and then re-merge with a different set of coding policies.
+ * Control whether the index will be indexed/merged with positions (word level index).
+ * Control whether the index will remain cached on disk, or loaded fully into main memory.
 
-= Command Line Options =
-The IR Toolkit tries to play nice with other UNIX tools; many of the options take input from standard input, so that they could be used with pipes and I/O redirection.
+= Command Line Usage =
+PolyIRTK tries to play nice with other UNIX tools; many of the options allow input to come from stdin so that they could be used with pipes and I/O redirection.
+
+== Indexing ==
+Example usage:
+`./irtk --index < input`
+The indexer reads the paths to the files it should index from standard in; the above command redirects the standard input to come from a file called input.
+The input file is a plain text file that should contain the absolute paths to the files you need to index, one per line.
+PolyIRTK
 
 *To index:* `irtk --index`
 
 irtk will then read from stdin the filenames (including the path, if not in the current directory) of the index bundles (say, from the gov2 dataset) that it will index. Each different file is separated by a newline.
 
+
+== Merging ==
 *To merge:* `irtk --merge=[value]`
 
 If the value is 'initial', all the index slices from the indexing step (with extension 0.y) will be merged into one index, consisting of the files index.idx, index.lex, index.dmap, and index.meta; depending on the configuration file, intermediate slices may also be left (otherwise, they will be deleted).
@@ -43,6 +51,7 @@ If the value is 'input', the merger will read from stdin those files you want to
 _additional options:_ `--merge-degree=[value]`
 Specify the merge degree to use (default is 64)
 
+== Querying ==
 *To query:* `irtk --query [IndexFilename] [LexiconFilename] [DocumentMapFilename] [MetaFilename]`
 
 Queries the index slice. If the filenames are left out, the default is to use index slice with the files index.idx, index.lex, index.dmap, index.meta.
@@ -50,6 +59,7 @@ Queries the index slice. If the filenames are left out, the default is to use in
 _additional options:_ `--query-mode=[value]`
 Set the querying mode. Value is one of 'interactive', 'interactive-single', or 'batch'.
 
+== Debug ==
 *To cat:* `irtk --cat [IndexFilename] [LexiconFilename] [DocumentMapFilename] [MetaFilename]`
 
 *To diff:* `irtk --diff [IndexFilename1] [LexiconFilename1] [DocumentMapFilename1] [MetaFilename1] [IndexFilename2] [LexiconFilename2] [DocumentMapFilename2] [MetaFilename2]`
@@ -57,6 +67,10 @@ Set the querying mode. Value is one of 'interactive', 'interactive-single', or '
 *To run compression tests:* `irtk --test-compression`
 
 *To test a particular coder:* `irtk --test-coder [rice, turbo-rice, pfor, s9, s16, vbyte, null]`
+
+== Remapping ==
+
+== Layering ==
 
 = Index Slices =
 
@@ -74,12 +88,3 @@ The .dmap extension indicates that the file is a document map.
 The .meta extension indicates that the file is a meta file.
 
 Index slices can be merged into larger index slices, as is described in the Merging section.
-
-= Indexing =
-...
-
-= Merging =
-...
-
-= Querying =
-...
