@@ -12,9 +12,21 @@ The parser supports parsing document bundles in either the TREC or WARC format, 
 
 = Indexing =
 
-The indexer is designed to use variable amounts of memory. The more memory that is allocated, the faster the indexing process will complete. 
+The indexer is designed to use variable amounts of memory. The more memory that is allocated, the faster the indexing process will complete because there will be less runs (index slices) produced and less indices to merge later.
+
+The index process collects postings in main memory in a simple and fast compressed format (variable byte coding); when PolyIRTK runs out of allocated memory, it will dump the postings onto disk (as a fully query-able index).
+
+== Index On Disk Structures ==
+
+This section describes the on disk structures that comprise a complete, fully query-able index.
 
 == Index Layout ==
+
+== Lexicon Layout ==
+
+== Document Map Layout ==
+
+== Meta File Layout ==
 
 === Positions ===
 Due to the index layout, specifically, the fixed block size, the maximum number of positions per term in a document, must be limited (it's a compile time constant). The reason is that if a particular group of documents have an abnormally large number of a certain word, it's possible that a chunk will be formed that is bigger than than that of our fixed size block. Thus, the possible solutions are to either increase the block size to accommodate the chunk or to limit the number of positions. Since the first solution would be dependent on the document collection, the second solution of limiting the positions was chosen. In practice, this shouldn't be an issue since it's rare that a document will have so many of one word. However, this constant (defaults to 64), can be modified to suit other's needs.
