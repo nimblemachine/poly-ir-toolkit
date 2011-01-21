@@ -17,8 +17,7 @@ The indexer is designed to use variable amounts of memory. The more memory that 
 == Index Layout ==
 
 === Positions ===
-Due to the index layout, specifically, the fixed block size, the maximum number of positions per term in a document, must be limited (it's a compile time constant).
-
+Due to the index layout, specifically, the fixed block size, the maximum number of positions per term in a document, must be limited (it's a compile time constant). The reason is that if a particular group of documents have an abnormally large number of a certain word, it's possible that a chunk will be formed that is bigger than than that of our fixed size block. Thus, the possible solutions are to either increase the block size to accommodate the chunk or to limit the number of positions. Since the first solution would be dependent on the document collection, the second solution of limiting the positions was chosen. In practice, this shouldn't be an issue since it's rare that a document will have so many of one word. However, this constant (defaults to 64), can be modified to suit other's needs.
 
 === Coding Policies (Compression) ===
 PolyIRTK supports various coding policies for different parts of the index. This allows us to take advantage of the differences between docIDs, frequencies, and positions, to choose the best compression algorithm, as well as experiment with new algorithms.
