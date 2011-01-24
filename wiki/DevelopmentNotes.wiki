@@ -5,6 +5,7 @@
 
 = Experiments to Run =
   * Benchmark indexing speed and query speed against zettair. Can also index with varbyte to make comparison fair.
+  * To test decompression speeds, can use the loop over list function. This would ignore scoring function and other overheads.
 
 = Files That Need Serious Cleanup =
   * document_map.h/cc
