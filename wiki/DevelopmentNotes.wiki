@@ -3,6 +3,10 @@
 = General Notes =
   * There are some duplicate docIDs in GOV2, and their scores will be the same; manually verified for a few docs.
 
+= Index Organization Ideas =
+  * Can we store all the block headers together at the front of each list? This should result in somewhat better processor cache utilization, since chunks will be closer together as well as the skipping information; but might not be worth it.
+  * Another idea to eliminate the "wasted space" at the end of each block. This means that a chunk can span block headers (assuming it can span a maximum of 2 blocks only). Since we know the size of each chunk (stored in the block header), when we start decompressing a chunk, we know if it'll spill over to the next block. The PROBLEM with this scheme is that when a chunk spans across a block, we need to get the complete chunk data in a single array. However, our caching scheme (LRU) prevents this because consecutive blocks are not guaranteed to be placed consecutively in the cache (although it is likely they are). When using this caching scheme, we'd have to check whether the blocks that the chunk spans are consecutively placed, and if not we need to copy the chunk data into a new array and use it as input to the compression function. Note that this does not affect us when the index is completely in main memory, since the blocks are always consecutively placed in main memory.
+
 = Experiments to Run =
   * Benchmark indexing speed and query speed against zettair. Can also index with varbyte to make comparison fair.
   * To test decompression speeds, can use the loop over list function. This would ignore scoring function and other overheads.
