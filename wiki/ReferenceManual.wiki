@@ -92,6 +92,13 @@ This file can be used as an input to the actual docID reordering procedure.
 
 The output of the remapping procedure will be a new index with the prefix 'index_remapped'.
 
+To query, you must specify the name of the remapped index to use, like so:
+
+`./irtk --query index_remapped.idx index_remapped.lex index.dmap index_remapped.meta`
+
+During querying, the document map will load the mapping file, in order to properly be able to translate the document lengths and URLs.
+Note that for querying, currently, the mapping file must be named 'url_sorted_doc_id_mapping'.
+
 == Layering ==
 
 = Index Slices =
