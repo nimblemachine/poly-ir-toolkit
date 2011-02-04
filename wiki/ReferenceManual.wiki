@@ -79,6 +79,13 @@ Set the querying mode. Value is one of 'interactive', 'interactive-single', or '
 
 == Remapping ==
 
+First, generate the remapping file. Currently, PolyIRTK only support reordering docIDs by their URLs.
+`irtk --generate-url-sorted-doc-mapping=url_sorted_doc_id_mapping < input`
+Note that it's important that the input files are the same ones, and appear in the same order, as those used to generate the index that's going to be remapped. This is because the docIDs are assigned sequentially during the indexing process, and me must remap based on these same sequentially assigned docIDs.
+The output of the above command will produce a file named 'url_sorted_doc_id_mapping'.
+This file can be used as an input to the actual docID reordering procedure.
+``
+
 == Layering ==
 
 = Index Slices =
