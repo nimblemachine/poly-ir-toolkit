@@ -11,9 +11,5 @@
   * Benchmark indexing speed and query speed against zettair. Can also index with varbyte to make comparison fair.
   * To test decompression speeds, can use the loop over list function. This would ignore scoring function and other overheads.
 
-= Files That Need Serious Cleanup =
-  * document_map.h/cc
-  * query_processor.h/cc
-
 = Commands to Keep in Mind =
   * valgrind --tool=cachegrind --branch-sim=yes --cachegrind-out-file=cachegrind.out ./irtk --loop-over-index-data=gov  index.idx index.lex index.dmap index.meta
