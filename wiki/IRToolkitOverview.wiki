@@ -39,3 +39,6 @@ PolyIRTK supports various coding policies for different parts of the index. This
 
 
 = Querying =
+
+== Ranking Function ==
+The BM25 formula is used throughout PolyIRTK. Of note is that the BM25 formula used here modifies the IDF component to always be positive, by adding 1 to the log() function. I found that this is especially necessary during the implementation of the TAAT with early termination query processing mode.
