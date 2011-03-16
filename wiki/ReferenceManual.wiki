@@ -33,18 +33,18 @@ PolyIRTK tries to play nice with other UNIX tools; many of the options allow inp
 Below are some examples of the most common usage modes.
 
 == Indexing ==
-*`./irtk --index < input`*
+*`irtk --index < input`*
 
 The indexer reads the paths to the files it should index from stdin; the above command redirects the standard input to come from a file called 'input'.
 The input file is a plain text file that should contain the absolute paths (or relative to the current directory) to the files you need to index, one per line.
 PolyIRTK can index either TREC (i.e. Gov2 dataset) or WARC (i.e. !ClueWeb dataset) formatted files; however, they must be gzipped. The type of input file is specified in the configuration file.
 
 == Merging ==
-*`./irtk --merge`*
+*`irtk --merge`*
 
 This command will merge all the index slices from the initial indexing step (with extensions 0.y) into one index, consisting of the files 'index.idx', 'index.lex', 'index.dmap_basic', 'index.dmap_extended', and 'index.meta'. Depending on the configuration file, intermediate slices may also be left intact (otherwise, they will be deleted).
 
-*`./irtk --merge-input`*
+*`irtk --merge-input`*
 
 In this command, the merger will read from stdin those files you want to merge followed by the new index slice name. You can specify new groups of files to be merged by leaving an empty new line after the new index slice name.
 
@@ -61,6 +61,7 @@ If the '!IndexName' is left out, the default is to use the index with the files 
 
 === Additional Options ===
 *`--query-mode=[value]`*
+
 Sets the querying mode. Value is one of 'interactive', 'interactive-single', 'batch', or 'batch-all'; default is 'interactive'.
 'interactive': Will read queries from stdin, displaying a search prompt. User cleanly ends querying with 'Ctrl-D'.
 'interactive-single': Will read a single query from stdin, displaying a search prompt, and will exit cleanly after running the single query.
@@ -68,6 +69,7 @@ Sets the querying mode. Value is one of 'interactive', 'interactive-single', 'ba
 'batch-all': Will read all queries from stdin and save them in memory. All queries will be executed, timed, and query statistics collected. Useful when testing with fully index in main memory.
 
 *`--result-format=[value]`*
+
 Sets the format of the result output. Value is one of 'trec', 'normal', 'compare', and 'discard'; default is 'normal'.
 'trec': Will output results in a format suitable for running the 'trec_eval' program on the output. Document URLs will be replaced with document TREC identifiers.
 'normal': Will output the docIDs, scores, and document URLs.
@@ -75,19 +77,25 @@ Sets the format of the result output. Value is one of 'trec', 'normal', 'compare
 'discard': Will discard all output. Useful for running large batch queries.
 
 *`--query-algorithm=[value]`*
+
 Sets the query algorithm to use. Value is one of 'default', 'daat-and', 'daat-or', 'dual-layered-overlapping-daat', 'dual-layered-overlapping-merge-daat', 'layered-taat-or-early-terminated', 'wand', 'max-score', 'daat-and-top-positions'; 'default' chooses a reasonable algorithm based on the index type (whether it's layered, in-memory, etc.).
 
 *`--query-stop-list-file=[value]`*
+
 Provide a stop list of terms that we'll be ignoring while executing queries. We will remove these terms from queries. Value is the path to the stop list file (one terms per line).
 
 *`--memory-map-index`*
+
 Memory maps the index; also loops over it to make sure it gets loaded in before we start executing queries.
 
 == Debug and Performance ==
+
 *`irtk --cat [IndexName]`*
 
 Outputs the specified index in a human readable format.
+
 === Additional Options ===
+
 *`--cat-term=[term]`*
 
 Only output the list for the specified term.
@@ -97,44 +105,67 @@ Only output the list for the specified term.
 *`irtk --diff [IndexName1] [IndexName2]`*
 
 Output the differences between two indices in a human readable format.
+
 === Additional Options ===
+
 *`--diff-term=[term]`*
 Only output the differences in the lists for the specified term.
 
 --------------------------------------------------------------------------------
 
 *`irtk --test-compression`*
+
 Run compression and decompression tests.
 
+--------------------------------------------------------------------------------
+
 *`irtk --test-coder=[rice, turbo-rice, pfor, s9, s16, vbyte, null]`*
+
 Test a particular coder.
 
-== Loop over index data ==
+--------------------------------------------------------------------------------
 
+*`--loop-over-index-data=[term]`*
+
+Loops over an inverted list (decompresses but does not do any top-k). Useful for benchmarking decompression coders.
+
+--------------------------------------------------------------------------------
+
+*`--retrieve-index-data=[term]`*
+
+Retrieves index data for an inverted list into an in-memory array. See function 'RetrieveIndexData()' in 'ir_toolkit.cc'.
 
 == Remapping ==
 
 First, generate the remapping file. Currently, PolyIRTK only support reordering docIDs by their URLs.
 
-`irtk --generate-url-sorted-doc-mapping=url_sorted_doc_id_mapping < input`
+*`irtk --generate-url-sorted-doc-mapping=url_sorted_doc_id_mapping < input`*
 
 Note that it's important that the input files are the same ones, and appear in the same order, as those used to generate the index that's going to be remapped. This is because the docIDs are assigned sequentially during the indexing process, and me must remap based on these same sequentially assigned docIDs.
 The output of the above command will produce a file named 'url_sorted_doc_id_mapping'.
 
 This file can be used as an input to the actual docID reordering procedure.
 
-`irtk --remap=url_sorted_doc_id_mapping`
+*`irtk --remap=url_sorted_doc_id_mapping`*
 
 The output of the remapping procedure will be a new index with the prefix 'index_remapped'.
 
 To query, you must specify the name of the remapped index to use, like so:
 
-`irtk --query index_remapped.idx index_remapped.lex index.dmap index_remapped.meta`
+*`irtk --query index_remapped`*
 
 During querying, the document map will load the mapping file, in order to properly be able to translate the document lengths and URLs.
 Note that for querying, currently, the mapping file must be named 'url_sorted_doc_id_mapping'.
 
 == Layering ==
+
+*`irtk --layerify`*
+
+This will generate a new layered index named 'index_layered'. You will want to specify some layering options in the configuration file; alternatively, you can specify them on the command line, like so:
+
+*`irtk --config-options=overlapping_layers=false\;num_layers=8\;layering_strategy=exponentially-increasing --layerify`*
+
+This particular command will not create overlapping layers (each layer will only have unique docIDs), and each list will have at most 8 layers, with an exponential number of docIDs in subsequent layers.
 
 = Index Slices =
 
@@ -146,11 +177,12 @@ An index slice is a complete and queryable index, consisting of the following fi
  * `[`index_name`]`.meta`[`.x.y`]`
  * `[`index_name`]`.ext`[`.x.y`]`
 
-The part in between `[`...`]` is optional. A fully merged index will not have the .x.y extension. The x and y are simply numbers which are assigned by the index merger to distinguish indices. The initial indices, resulting from the indexing step have x equal to 0, and y is just an incrementing index count. Each pass that the merger makes over the index collection will result in an incrementing x, and y is still just an index count within that pass.
+A fully merged index will not have the [.x.y] extension. The x and y are simply numbers which are assigned by the index merger to distinguish indices. The initial indices, resulting from the indexing step have x equal to 0, and y is just an incrementing index count. Each pass that the merger makes over the index collection will result in an incrementing x, and y is still just an index count within that pass.
 
 The .idx extension is for inverted index files.
 The .lex extension is for lexicon files.
 The .dmap_basic and .dmap_extended extensions are for document map files. A .dmap_basic file consists of document lengths and offsets into the .dmap_extended files. The .dmap_extended file consists of document URLs and document TREC numbers.
 The .meta extension indicates that the file is a meta file.
+The .ext extension is a file generated during the layering process which holds information about the partial BM25 scores of each block and each chunk in the index.
 
 Index slices can be merged into larger index slices, as is described in the Merging section.
