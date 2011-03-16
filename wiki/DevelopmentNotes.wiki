@@ -1,7 +1,8 @@
 #summary Development notes.
+#labels Featured
 
 = General Notes =
-  * There are some duplicate docIDs in GOV2, and their scores will be the same; manually verified for a few docs.
+  * There are some duplicate docIDs in GOV2, and their scores will be the same.
 
 = Index Organization Ideas =
   * Can we store all the block headers together at the front of each list? This should result in somewhat better processor cache utilization, since chunks will be closer together as well as the skipping information; but might not be worth it. In this case, the lexicon would need a pointer (offset) to the start of the appropriate block headers, plus a pointer (offset) to the start of the actual list data (for OR/single word queries) for when we don't need to decode block headers.
@@ -16,4 +17,5 @@
   * To test decompression speeds, can use the loop over list function. This would ignore scoring function and other overheads.
 
 = Commands to Keep in Mind =
-  * valgrind --tool=cachegrind --branch-sim=yes --cachegrind-out-file=cachegrind.out ./irtk --loop-over-index-data=gov  index.idx index.lex index.dmap index.meta
+  * valgrind --tool=cachegrind --branch-sim=yes --cachegrind-out-file=cachegrind.out ./irtk --loop-over-index-data=gov index
+

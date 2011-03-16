@@ -1,4 +1,4 @@
-#summary How to compile and use the Poly IR Toolkit.
+#summary How to compile and use PolyIRTK.
 #labels Featured
 
 = Introduction =
