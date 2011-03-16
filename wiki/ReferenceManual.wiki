@@ -85,13 +85,15 @@ Memory maps the index; also loops over it to make sure it gets loaded in before 
 
 == Debug and Performance ==
 *`irtk --cat [IndexName]`*
+
 Outputs the specified index in a human readable format.
 === Additional Options ===
 *`--cat-term=[term]`*
+
 Only output the list for the specified term.
 
-
 *`irtk --diff [IndexName1] [IndexName2]`*
+
 Output the differences between two indices in a human readable format.
 === Additional Options ===
 *`--diff-term=[term]`*
