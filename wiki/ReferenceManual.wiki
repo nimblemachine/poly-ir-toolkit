@@ -92,12 +92,16 @@ Outputs the specified index in a human readable format.
 
 Only output the list for the specified term.
 
+--------------------------------------------------------------------------------
+
 *`irtk --diff [IndexName1] [IndexName2]`*
 
 Output the differences between two indices in a human readable format.
 === Additional Options ===
 *`--diff-term=[term]`*
 Only output the differences in the lists for the specified term.
+
+--------------------------------------------------------------------------------
 
 *`irtk --test-compression`*
 Run compression and decompression tests.
