@@ -17,5 +17,8 @@
   * To test decompression speeds, can use the loop over list function. This would ignore scoring function and other overheads.
 
 = Commands to Keep in Mind =
-  * valgrind --tool=cachegrind --branch-sim=yes --cachegrind-out-file=cachegrind.out ./irtk --loop-over-index-data=gov index
-
+  * *Run Valgrind*: `valgrind --tool=cachegrind --branch-sim=yes --cachegrind-out-file=cachegrind.out ./irtk --loop-over-index-data=gov index`
+  * To drop caches in Linux (must be root):
+    * *Free page cache*: `echo 1 > /proc/sys/vm/drop_caches`
+    * *Free dentries and inodes*: `echo 2 > /proc/sys/vm/drop_caches`
+    * *Free pagecache, dentries and inodes*: `echo 3 > /proc/sys/vm/drop_caches`
