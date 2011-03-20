@@ -62,27 +62,43 @@ If the '!IndexName' is left out, the default is to use the index with the files 
 === Additional Options ===
 *`--query-mode=[value]`*
 
-Sets the querying mode. Value is one of 'interactive', 'interactive-single', 'batch', or 'batch-all'; default is 'interactive'.
-'interactive': Will read queries from stdin, displaying a search prompt. User cleanly ends querying with 'Ctrl-D'.
-'interactive-single': Will read a single query from stdin, displaying a search prompt, and will exit cleanly after running the single query.
-'batch': Will read all queries from stdin and save them in memory. Will process a percentage of the queries to warm up the cache (these will not be timed, query statistics will be discarded, and their results will not be displayed). The rest of the queries will be timed and query statistics collected; their results will be displayed unless the '--result-format' option is specified. Useful for testing performance when using the LRU cache.
-'batch-all': Will read all queries from stdin and save them in memory. All queries will be executed, timed, and query statistics collected. Useful when testing with fully index in main memory.
+Sets the querying mode. Value is one of 'interactive', 'interactive-single', 'batch', or 'batch-bench'; default is 'interactive'.
+
+*'interactive'*: Will read queries from stdin, displaying a search prompt. User cleanly ends querying with 'Ctrl-D'.
+
+*'interactive-single'*: Will read a single query from stdin, displaying a search prompt, and will exit cleanly after running the single query.
+
+*'batch'*: Will read all queries from stdin and save them in memory. All queries will be timed and query statistics collected; their results will be displayed unless the '--result-format' option is set to 'discard' (the queries themselves will be displayed regardless). This should not be used for benchmarking because the caches are not warmed up.
+
+*'batch-bench'*: Will read all queries from stdin and save them in memory. First, the query log will be executed without timing the queries; then it will be executed a second time, with all queries timed and query statistics collected. Useful when benchmarking with memory mapping the index or using the LRU cache.
+
+--------------------------------------------------------------------------------
 
 *`--result-format=[value]`*
 
 Sets the format of the result output. Value is one of 'trec', 'normal', 'compare', and 'discard'; default is 'normal'.
-'trec': Will output results in a format suitable for running the 'trec_eval' program on the output. Document URLs will be replaced with document TREC identifiers.
-'normal': Will output the docIDs, scores, and document URLs.
-'compare': Will output the docIDs and scores in a compact format. The query will also be output before the results start. Useful for comparing results for different query algorithms.
-'discard': Will discard all output. Useful for running large batch queries.
+
+*'trec'*: Will output results in a format suitable for running the 'trec_eval' program on the output. Document URLs will be replaced with document TREC identifiers.
+
+*'normal'*: Will output the docIDs, scores, and document URLs.
+
+*'compare'*: Will output the docIDs and scores in a compact format. The query will also be output before the results start. Useful for comparing results for different query algorithms.
+
+*'discard'*: Will discard all output. Useful for running large batch queries.
+
+--------------------------------------------------------------------------------
 
 *`--query-algorithm=[value]`*
 
 Sets the query algorithm to use. Value is one of 'default', 'daat-and', 'daat-or', 'dual-layered-overlapping-daat', 'dual-layered-overlapping-merge-daat', 'layered-taat-or-early-terminated', 'wand', 'max-score', 'daat-and-top-positions'; 'default' chooses a reasonable algorithm based on the index type (whether it's layered, in-memory, etc.).
 
+--------------------------------------------------------------------------------
+
 *`--query-stop-list-file=[value]`*
 
 Provide a stop list of terms that we'll be ignoring while executing queries. We will remove these terms from queries. Value is the path to the stop list file (one terms per line).
+
+--------------------------------------------------------------------------------
 
 *`--memory-map-index`*
 
