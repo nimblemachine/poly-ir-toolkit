@@ -84,7 +84,7 @@ Sets the format of the result output. Value is one of 'trec', 'normal', 'compare
 
 *'compare'*: Will output the docIDs and scores in a compact format. The query will also be output before the results start. Useful for comparing results for different query algorithms.
 
-*'discard'*: Will discard all output. Useful for running large batch queries.
+*'discard'*: Will discard all output. Useful for running large batch queries during benchmarking.
 
 --------------------------------------------------------------------------------
 
@@ -96,7 +96,7 @@ Sets the query algorithm to use. Value is one of 'default', 'daat-and', 'daat-or
 
 *`--query-stop-list-file=[value]`*
 
-Provide a stop list of terms that we'll be ignoring while executing queries. We will remove these terms from queries. Value is the path to the stop list file (one terms per line).
+Provide a stop list of terms that we'll be ignoring while executing queries. We will remove these terms from queries. Value is the path to the stop list file (one term per line).
 
 --------------------------------------------------------------------------------
 
