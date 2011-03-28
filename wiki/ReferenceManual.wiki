@@ -149,7 +149,7 @@ Loops over an inverted list (decompresses but does not do any top-k). Useful for
 
 *`--retrieve-index-data=[term]`*
 
-Retrieves index data for an inverted list into an in-memory array. See function 'RetrieveIndexData()' in 'ir_toolkit.cc'.
+Retrieves index data for an inverted list into an in-memory array. See function '!RetrieveIndexData()' in 'ir_toolkit.cc'.
 
 == Remapping ==
 
