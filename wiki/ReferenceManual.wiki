@@ -197,5 +197,5 @@ An index slice is a complete and queryable index, consisting of the following fi
 
 A fully merged index will not have the `[`.x.y`]` extension. The x and y are simply numbers which are assigned by the index merger to distinguish indices. The initial indices, resulting from the indexing step have x equal to 0, and y is just an incrementing index count. Each pass that the merger makes over the index collection will result in an incrementing x, and y is still just an index count within that pass.
 
-Index slices can be merged into larger index slices, as is described in the Merging section.
+Index slices can be merged into larger index slices, as is described in the [Merging merging] section.
 
