@@ -20,7 +20,7 @@
   * *Valgrind*:
     * *Test cache and branching*: `valgrind --tool=cachegrind --branch-sim=yes --cachegrind-out-file=cachegrind.out ./irtk --loop-over-index-data=gov index`
     * *Test for memory leaks and other invalid uses*: `valgrind --tool=memcheck --leak-check=yes ./irtk --loop-over-index-data=gov index`
-  * To drop caches in Linux (must be root):
+  * *Drop caches in Linux (must be root)*:
     * *Free page cache*: `echo 1 > /proc/sys/vm/drop_caches`
     * *Free dentries and inodes*: `echo 2 > /proc/sys/vm/drop_caches`
     * *Free pagecache, dentries and inodes*: `echo 3 > /proc/sys/vm/drop_caches`
