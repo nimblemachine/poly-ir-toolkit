@@ -175,9 +175,10 @@ Note that for querying, currently, the mapping file must be named 'url_sorted_do
 
 == Layering ==
 
-*`irtk --layerify`*
+*`irtk --layerify` [InputIndexName] [OutputIndexName]*
 
-This will generate a new layered index named 'index_layered'. You will want to specify some layering options in the configuration file; alternatively, you can specify them on the command line, like so:
+This will use 'index' to generate a new layered index named 'index_layered', by default. You can override these defaults by specifying !InputIndexName and !OutputIndexName, respectively.
+You will want to specify some layering options in the configuration file; alternatively, you can specify them on the command line, like so:
 
 *`irtk --config-options=overlapping_layers=false\;num_layers=8\;layering_strategy=exponentially-increasing --layerify`*
 
@@ -193,7 +194,7 @@ An index slice is a complete and queryable index, consisting of the following fi
  * `[`index_name`]`.meta`[`.x.y`]`
  * `[`index_name`]`.ext`[`.x.y`]`
 
-A fully merged index will not have the [.x.y] extension. The x and y are simply numbers which are assigned by the index merger to distinguish indices. The initial indices, resulting from the indexing step have x equal to 0, and y is just an incrementing index count. Each pass that the merger makes over the index collection will result in an incrementing x, and y is still just an index count within that pass.
+A fully merged index will not have the `[`.x.y`]` extension. The x and y are simply numbers which are assigned by the index merger to distinguish indices. The initial indices, resulting from the indexing step have x equal to 0, and y is just an incrementing index count. Each pass that the merger makes over the index collection will result in an incrementing x, and y is still just an index count within that pass.
 
 The .idx extension is for inverted index files.
 The .lex extension is for lexicon files.
