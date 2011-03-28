@@ -15,7 +15,7 @@ PolyIRTK uses standard C++ as much as possible. It's been compiled with GCC 4.x 
  * POSIX Threads
  * POSIX Asynchronous I/O (AIO)
 
-The Threads and AIO libraries should come with any POSIX compliant OS.
+The Threads and AIO libraries should come with any POSIX compliant OS. zlib has been ported to just about every OS in existence.
 
 = Code Style =
 If you would like to hack on PolyIRTK, you'll find that the code style closely follows that of the [http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml Google C++ Style Guide]. I felt it was very practical and easy to follow.
