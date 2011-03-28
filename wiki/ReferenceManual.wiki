@@ -102,7 +102,7 @@ Provide a stop list of terms that we'll be ignoring while executing queries. We 
 
 *`--memory-map-index`*
 
-Memory maps the index; also loops over it to make sure it gets loaded in before we start executing queries.
+Memory maps the index; this does not load the pages into memory beforehand. The index will be loaded as we execute the queries and request blocks. During the 'batch-bench' query mode, we execute all queries twice to make sure they get loaded into memory before we time the query run time.
 
 == Debug and Performance ==
 
