@@ -175,7 +175,7 @@ Note that for querying, currently, the mapping file must be named 'url_sorted_do
 
 == Layering ==
 
-*`irtk --layerify` [!InputIndexName] [!OutputIndexName]*
+*`irtk --layerify` `[`InputIndexName`]` `[`OutputIndexName`]`*
 
 This will use 'index' to generate a new layered index named 'index_layered', by default. You can override these defaults by specifying !InputIndexName and !OutputIndexName, respectively.
 You will want to specify some layering options in the configuration file; alternatively, you can specify them on the command line, like so:
