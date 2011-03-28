@@ -188,22 +188,14 @@ This particular command will not create overlapping layers (each layer will only
 = Index Slices =
 
 An index slice is a complete and queryable index, consisting of the following files:
- * `[`index_name`]`.idx`[`.x.y`]`
-The .idx extension is for inverted index files.
- * `[`index_name`]`.lex`[`.x.y`]`
- * index.dmap_basic
- * index.dmap_extended
- * `[`index_name`]`.meta`[`.x.y`]`
- * `[`index_name`]`.ext`[`.x.y`]`
+ * `[`index_name`]`.idx`[`.x.y`]`: The .idx extension is for inverted index files.
+ * `[`index_name`]`.lex`[`.x.y`]`: The .lex extension is for lexicon files.
+ * index.dmap_basic: The .dmap_basic and .dmap_extended extensions are for document map files. A .dmap_basic file consists of document lengths and offsets into the .dmap_extended files.
+ * index.dmap_extended: The .dmap_extended file consists of document URLs and document TREC numbers.
+ * `[`index_name`]`.meta`[`.x.y`]`: The .meta extension indicates that the file is a meta file, which holds configuration information about how the index was constructed and index statistics. 
+ * `[`index_name`]`.ext`[`.x.y`]`: The .ext extension is a file generated during the layering process which holds information about the partial BM25 scores of each block and each chunk in the index.
 
 A fully merged index will not have the `[`.x.y`]` extension. The x and y are simply numbers which are assigned by the index merger to distinguish indices. The initial indices, resulting from the indexing step have x equal to 0, and y is just an incrementing index count. Each pass that the merger makes over the index collection will result in an incrementing x, and y is still just an index count within that pass.
 
 Index slices can be merged into larger index slices, as is described in the Merging section.
-
-
-The .lex extension is for lexicon files.
-The .dmap_basic and .dmap_extended extensions are for document map files. A .dmap_basic file consists of document lengths and offsets into the .dmap_extended files. The .dmap_extended file consists of document URLs and document TREC numbers.
-The .meta extension indicates that the file is a meta file, which holds configuration information about how the index was constructed and index statistics. 
-The .ext extension is a file generated during the layering process which holds information about the partial BM25 scores of each block and each chunk in the index.
-
 
