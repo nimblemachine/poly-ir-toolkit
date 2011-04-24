@@ -16,6 +16,11 @@
   * Benchmark indexing speed and query speed against zettair. Can also index with varbyte to make comparison fair.
   * To test decompression speeds, can use the loop over list function. This would ignore scoring function and other overheads.
 
+= Planned Features =
+  * *Unicode Support*: This would require major changes to the parser and lexicon
+  * *Parser Improvements*: Aside from unicode support (should be able to parse UTF-8 documents, possibly other character sets), need to allow user to specify which bytes to tokenize on. Also, need a custom XML format for defining documents and their features (title, body, custom fields); this should have the capability to be piped into our program, uncompressed.
+  * *B Tree Lexicon*: This is essential to conserving memory, especially on embedded systems. Instead of loading the lexicon into main memory into a hash table, we will have an additional file that is a B tree representation of the lexicon.
+
 = Commands to Keep in Mind =
   * *Valgrind*:
     * *Test cache and branching*: `valgrind --tool=cachegrind --branch-sim=yes --cachegrind-out-file=cachegrind.out ./irtk --loop-over-index-data=gov index`
