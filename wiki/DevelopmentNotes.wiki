@@ -19,7 +19,7 @@
 = Planned Features =
   * *Unicode Support*: This would require major changes to the parser and lexicon
   * *Parser Improvements*: Aside from unicode support (should be able to parse UTF-8 documents, possibly other character sets), need to allow user to specify which bytes to tokenize on. Also, need a custom XML format for defining documents and their features (title, body, custom fields); this should have the capability to be piped into our program, uncompressed.
-  * *B Tree Lexicon*: This is essential to conserving memory, especially on embedded systems. Instead of loading the lexicon into main memory into a hash table, we will have an additional file that is a B tree representation of the lexicon.
+  * *B Tree Lexicon*: This is essential to conserving memory, especially on embedded systems. Instead of loading the lexicon into main memory into a hash table, we will have an additional file that is a B tree representation of the lexicon.  The lexicon itself will remain mostly the same (but it would be a good time to front code the terms to save some space). In order to efficiently (as in, don't require the whole thing to be read into main memory) build the B tree, we would need to either split the lexicon into fixed size blocks, or let each term contain a sentinel value, so that we can seek to some position in the lexicon, and figure out where the start of the closest term is. The B tree itself could either be loaded into main memory (it should be fairly small), or some levels can be cached, or not at all. Each internal node will simply contain n terms, front coded, and pointers to the next level; the last level will contain offsets into the actual lexicon file.
 
 = Commands to Keep in Mind =
   * *Valgrind*:
