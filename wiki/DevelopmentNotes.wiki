@@ -11,6 +11,7 @@
 
 = Parallel Indexing Capability =
   * Have command line options to specify the number of processes we want and fork off several irtk processes. Each process should create a unique folder for outputting index files (perhaps using the pid for the folder name). The parent that sets this up can split the files to index for each child process and pipe them into each child (through I/O redirection) and then die. Things like merging can be done independently within each folder. The final merge would have to be done by specifying the indices in each folder. Note that each process would need to record the docID offset for it's index. The final merge would have to take the offsets into account.
+  * Use Hadoop (via their C/C++ pipes API) to generate indices in parallel.
 
 = Experiments to Run =
   * Benchmark indexing speed and query speed against zettair. Can also index with varbyte to make comparison fair.
