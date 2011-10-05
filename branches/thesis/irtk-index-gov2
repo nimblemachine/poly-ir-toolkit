@@ -1,0 +1,34 @@
+#!/bin/bash
+
+IR_TOOLKIT_DIR="."
+
+echo "Switching to directory '$IR_TOOLKIT_DIR'"
+cd $IR_TOOLKIT_DIR
+
+
+echo "Indexing Gov2"
+time ./irtk --index < ../gov2_files_bench
+
+
+echo "Merging Gov2"
+time ./irtk --merge
+
+
+echo "Layering 'index' to 'index_layered_default'"
+time ./irtk --layerify index index_layered_default
+
+
+echo "Layering 'index' to 'index_layered_8_exp_non_overlapping'"
+time ./irtk --config-options=overlapping_layers=false\;num_layers=8\;layering_strategy=exponentially-increasing --layerify index index_layered_8_exp_non_overlapping
+
+
+echo "Layering 'index' to 'index_layered_8_equal_non_overlapping'"
+time ./irtk --config-options=overlapping_layers=false\;num_layers=8\;layering_strategy=percentage-lower-bounded --layerify index index_layered_8_equal_non_overlapping
+
+
+echo "Generating URL sorted document mapping for Gov2"
+time ./irtk --generate-url-sorted-doc-mapping=url_sorted_doc_id_mapping < ../gov2_files_bench
+
+
+echo "Remapping Gov2"
+time ./irtk --remap=url_sorted_doc_id_mapping
